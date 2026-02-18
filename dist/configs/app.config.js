@@ -2,15 +2,7 @@ const appConfig = {
     /**
      * server port
      */
-    PORT: Number(process.env.PORT) || 3001,
-    /**
-     * domain frontend yang diizinkan untuk CORS
-     * format env: FRONTEND_ORIGIN=https://app.example.com,https://www.example.com
-     */
-    FRONTEND_ORIGIN: String(process.env.FRONTEND_ORIGIN || "")
-        .split(",")
-        .map((value) => value.trim())
-        .filter(Boolean),
+    PORT: 3001,
     /**
      * ngilangin properti sourceUrl di response
      *

@@ -1,7 +1,6 @@
 interface IAppConfig {
   PORT: number;
   sourceUrl: boolean;
-  FRONTEND_ORIGIN: string[];
 }
 
 interface IAnimeConfig {

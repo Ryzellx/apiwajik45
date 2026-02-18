@@ -9,30 +9,7 @@ import setPayload from "./helpers/setPayload.js";
 import cors from "cors";
 const { PORT } = appConfig;
 const app = express();
-const isAllowedVercelPreview = (origin) => {
-    try {
-        const host = new URL(origin).hostname.toLowerCase();
-        return host === "vercel.app" || host.endsWith(".vercel.app");
-    }
-    catch {
-        return false;
-    }
-};
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin) {
-            callback(null, true);
-            return;
-        }
-        if (appConfig.FRONTEND_ORIGIN.length === 0 ||
-            appConfig.FRONTEND_ORIGIN.includes(origin) ||
-            isAllowedVercelPreview(origin)) {
-            callback(null, true);
-            return;
-        }
-        callback(new Error("Not allowed by CORS"));
-    },
-}));
+app.use(cors());
 app.use(clientCache(1));
 app.get("/", (req, res) => {
     const routes = [
@@ -60,5 +37,5 @@ app.use("/kuramanime", kuramanimeRouter);
 app.use("/samehadaku", samehadakuRouter);
 app.use(errorHandler);
 app.listen(PORT, () => {
-    console.log(`server is running on port ${PORT}`);
+    console.log(`server is running on http://localhost:${PORT}`);
 });
