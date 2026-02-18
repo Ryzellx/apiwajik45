@@ -10,6 +10,14 @@ import cors from "cors";
 
 const { PORT } = appConfig;
 const app = express();
+const isAllowedVercelPreview = (origin: string) => {
+  try {
+    const host = new URL(origin).hostname.toLowerCase();
+    return host === "vercel.app" || host.endsWith(".vercel.app");
+  } catch {
+    return false;
+  }
+};
 
 app.use(
   cors({
@@ -19,7 +27,11 @@ app.use(
         return;
       }
 
-      if (appConfig.FRONTEND_ORIGIN.length === 0 || appConfig.FRONTEND_ORIGIN.includes(origin)) {
+      if (
+        appConfig.FRONTEND_ORIGIN.length === 0 ||
+        appConfig.FRONTEND_ORIGIN.includes(origin) ||
+        isAllowedVercelPreview(origin)
+      ) {
         callback(null, true);
         return;
       }
